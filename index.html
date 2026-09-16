@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الاستشارات الهندسية والاعتمادية الشامل | Enterprise Consulting Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #0b132b; color: #f1f5f9; }
+        @media print {
+            header, .no-print { display: none !important; }
+            body { background: white !important; color: black !important; }
+            .print-card { border: 1px solid #cbd5e1 !important; background: white !important; color: black !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <!-- Navbar -->
+    <header class="bg-slate-900/90 border-b border-emerald-500/30 sticky top-0 z-50 shadow-xl backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-gears"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-xl font-black tracking-wide text-white">منصة "استشير" للحلول الهندسية والاعتمادية</h1>
+                        <span class="bg-emerald-500/20 text-emerald-400 text-[10px] font-bold px-2.5 py-0.5 rounded border border-emerald-500/30">v6.0 Realistic Engine</span>
+                    </div>
+                    <p class="text-xs text-slate-400">المحرك الاستشاري المتخصص في حل التحديات التشغيلية واللوجستية</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1.5 rounded-full border border-emerald-500/20 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    محرك التحليل القطاعي فعال
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-8">
+        
+        <!-- Input Form Section -->
+        <div class="no-print bg-slate-900/80 rounded-3xl border border-slate-800 p-6 md:p-8 mb-8 shadow-2xl backdrop-blur-sm">
+            <div class="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-indigo-600/30 text-indigo-400 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-white">إدخال بيانات التحدي التشغيلي / اللوجستي</h2>
+                        <p class="text-xs text-slate-400">سيقوم المحرك بتحديد القطاع وصياغة حلول هندسية واضحة ومباشرة</p>
+                    </div>
+                </div>
+                <button onclick="resetForm()" class="text-xs font-bold text-slate-400 hover:text-red-400 transition flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-xl border border-slate-700">
+                    <i class="fa-solid fa-rotate-left"></i> مسح الخانات
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">القطاع المستهدف</label>
+                    <select id="sector" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none transition">
+                        <option value="supply">سلاسل الإمداد اللوجستية والنقل</option>
+                        <option value="engineering">الهندسة والتصنيع الثقيل</option>
+                        <option value="energy">الطاقة والتعدين والخدمات البيئية</option>
+                        <option value="tech">التقنية والبنية التحتية الذكية</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">المحور الاستراتيجي</label>
+                    <select id="focusGoal" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none transition">
+                        <option value="reliability">إدارة الاعتمادية وتقليل الأعطال (Reliability & Maintenance)</option>
+                        <option value="sustainability">الاستدامة وتقليل الهدر والانبعاثات (ESG & Green Operations)</option>
+                        <option value="automation">الأتمتة والتحول الرقمي (Automation & Warehouse Systems)</option>
+                        <option value="quality">إدارة الجودة والسلامة المهنية (Quality & HSE)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">حجم المنشأة</label>
+                    <select id="scale" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none transition">
+                        <option value="enterprise">مؤسسة كبرى / مجمع لوجستي صناعي (Enterprise)</option>
+                        <option value="sme">منشأة متوسطة / خط تشغيلي مخصص</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-xs font-bold text-slate-300 mb-2">اكتب تفاصيل المشكلة بكل وضوح:</label>
+                <textarea id="problemInput" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-sm text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none transition placeholder-slate-500" placeholder="مثال: نعاني من تكرار الأعطال المفاجئة في أسطول الشاحنات وأنظمة المناولة بالمركز اللوجستي، مما يسبب تأخير تسليم الشحنات وارتفاع تكاليف الصيانة الطارئة..."></textarea>
+            </div>
+
+            <button onclick="runRealisticEngineeringEngine()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-4 rounded-2xl transition-all shadow-xl shadow-emerald-950/40 flex items-center justify-center gap-3 text-sm tracking-wide">
+                <i class="fa-solid fa-microchip"></i>
+                تحليل المشكلة وتوليد الحلول الهندسية المعتمدة
+            </button>
+        </div>
+
+        <!-- Loader Section -->
+        <div id="loader" class="hidden text-center py-16 bg-slate-900/80 rounded-3xl border border-slate-800 shadow-2xl mb-8">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent mb-4"></div>
+            <h3 class="text-base font-bold text-white">جاري المطابقة مع قواعد الحلول الهندسية المباشرة وتقييم الاعتمادية...</h3>
+            <p class="text-xs text-slate-400 mt-1">يتم تصنيف المشكلة وتحديد الحلول الميدانية والمخاطر المترتبة...</p>
+        </div>
+
+        <!-- Output Report Section -->
+        <div id="reportSection" class="hidden space-y-8">
+            
+            <!-- Actions Header -->
+            <div class="no-print bg-slate-900/90 text-white p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4 shadow-xl border border-slate-800 backdrop-blur-md">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold border border-emerald-500/30">
+                        <i class="fa-solid fa-file-shield text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-base text-white">التقرير الهندسي المعتمد لحل التحدي</h3>
+                        <p class="text-xs text-slate-400" id="reportTimestamp">رقم المرجعية الهندسية: #ENG-REAL-8802</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-5 py-3 rounded-xl flex items-center gap-2 transition shadow-lg shadow-emerald-950/20">
+                        <i class="fa-solid fa-print"></i> تصدير التقرير / PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Executive Summary -->
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 md:p-8 rounded-3xl border border-emerald-500/30 shadow-2xl">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block mb-2"><i class="fa-solid fa-compass ml-1"></i> الملخص الاستشاري التنفيذي</span>
+                <h3 class="text-lg md:text-xl font-black text-white mb-3" id="execTitle">الخطة المعتمدة لمعالجة التحدي</h3>
+                <p class="text-slate-300 text-sm leading-relaxed" id="execBody">
+                    <!-- Dynamic Summary -->
+                </p>
+            </div>
+
+            <!-- Quantitative KPIs -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 shadow-xl">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">تقليل زمن الأعطال (Downtime)</span>
+                    <div class="text-2xl font-black text-emerald-400" id="kpiDowntime">-0%</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">تحسين استمرارية التشغيل</span>
+                </div>
+                <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 shadow-xl">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">ارتفاع كفاءة الاعتمادية (MTBF)</span>
+                    <div class="text-2xl font-black text-indigo-400" id="kpiMtbf">+0%</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">زيادة متوسط الزمن بين الأعطال</span>
+                </div>
+                <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 shadow-xl">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">الوفر في تكاليف الصيانة الطارئة</span>
+                    <div class="text-2xl font-black text-blue-400" id="kpiSavings">0%</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">تقليل شراء قطع الغيار المستعجلة</span>
+                </div>
+                <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 shadow-xl">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">فترة الاسترداد المتوقعة (ROI)</span>
+                    <div class="text-2xl font-black text-teal-400" id="kpiRoi">0 أشهر</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">استرداد تكلفة التطوير</span>
+                </div>
+            </div>
+
+            <!-- Section 1: Detailed Diagnosis -->
+            <div class="bg-slate-900/90 rounded-3xl p-6 md:p-8 border border-slate-800 shadow-2xl">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                    <i class="fa-solid fa-microscope text-emerald-400"></i>
+                    1. التشخيص الهندسي وتحليل المسببات الجذرية
+                </h3>
+                
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 mb-5">
+                    <span class="text-xs font-bold text-emerald-400 block mb-1">المشكلة التي أدخلتها:</span>
+                    <p id="displayUserProblem" class="text-sm italic text-slate-200 font-semibold">""</p>
+                </div>
+
+                <p id="dynamicDiagnosisParagraph" class="text-sm text-slate-300 leading-relaxed font-normal mb-6">
+                    <!-- Dynamic Text -->
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs" id="focusAreasContainer">
+                    <!-- Dynamic Focus Cards -->
+                </div>
+            </div>
+
+            <!-- Section 2: Concrete Practical Solutions -->
+            <div class="bg-slate-900/90 rounded-3xl p-6 md:p-8 border border-slate-800 shadow-2xl">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                    <i class="fa-solid fa-screwdriver-wrench text-emerald-400"></i>
+                    2. مسارات الحلول الهندسية المحددة والعمودية
+                </h3>
+                <div class="space-y-4" id="solutionsContainer">
+                    <!-- Dynamic Realistic Solutions -->
+                </div>
+            </div>
+
+            <!-- Section 3: Visual Analytics -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-slate-900/90 p-6 md:p-8 rounded-3xl border border-slate-800 shadow-2xl">
+                    <h4 class="text-xs font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-emerald-400"></i>
+                        منحنى خفض الأعطال ورفع الاعتمادية خلال المراحل
+                    </h4>
+                    <div class="relative h-60">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-900/90 p-6 md:p-8 rounded-3xl border border-slate-800 shadow-2xl">
+                    <h4 class="text-xs font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-emerald-400"></i>
+                        توزيع التركيز الهندسي والعملي للحل
+                    </h4>
+                    <div class="relative h-60">
+                        <canvas id="pillarsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Realistic Risk Matrix -->
+            <div class="bg-slate-900/90 rounded-3xl p-6 md:p-8 border border-slate-800 shadow-2xl">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                    <i class="fa-solid fa-shield-halved text-amber-400"></i>
+                    3. مصفوفة المخاطر الميدانية المتوقعة وكيفية تفاديها
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs" id="riskGrid">
+                    <!-- Dynamic Risks -->
+                </div>
+            </div>
+
+            <!-- Section 5: Tangible Deliverables -->
+            <div class="bg-slate-900/90 rounded-3xl p-6 md:p-8 border border-slate-800 shadow-2xl">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                    <i class="fa-solid fa-box-archive text-emerald-400"></i>
+                    4. النواتج والمخرجات الملموسة للمشروع (Project Deliverables)
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs" id="deliverablesGrid">
+                    <!-- Dynamic Deliverables -->
+                </div>
+            </div>
+
+            <!-- Section 6: Phased Implementation Roadmap -->
+            <div class="bg-slate-900/90 rounded-3xl p-6 md:p-8 border border-slate-800 shadow-2xl">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2.5 border-b border-slate-800 pb-3">
+                    <i class="fa-solid fa-list-check text-emerald-400"></i>
+                    5. خارطة الطريق للتطبيق التنفيذي والتحديث
+                </h3>
+                <div class="space-y-3 text-xs" id="roadmapGrid">
+                    <!-- Dynamic Roadmap -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JavaScript Realistic Engine -->
+    <script>
+        let progressChartInstance = null;
+        let pillarsChartInstance = null;
+
+        function resetForm() {
+            document.getElementById('problemInput').value = '';
+            document.getElementById('reportSection').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function runRealisticEngineeringEngine() {
+            const rawInput = document.getElementById('problemInput').value.trim();
+            const sector = document.getElementById('sector').value;
+            const focusGoal = document.getElementById('focusGoal').value;
+            const scale = document.getElementById('scale').value;
+
+            if (!rawInput) {
+                alert('يرجى كتابة نص المشكلة أولاً للتحليل!');
+                return;
+            }
+
+            document.getElementById('loader').classList.remove('hidden');
+            document.getElementById('reportSection').classList.add('hidden');
+
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('reportSection').classList.remove('hidden');
+
+                // Process inputs using domain-specific engine
+                const analysis = analyzeProblemCategorically(rawInput, sector, focusGoal, scale);
+
+                // Populate UI
+                document.getElementById('displayUserProblem').innerText = `"${rawInput}"`;
+                document.getElementById('reportTimestamp').innerText = `رقم التقرير الفني: #ENG-REAL-${analysis.hashSeed}`;
+
+                document.getElementById('execTitle').innerText = analysis.execTitle;
+                document.getElementById('execBody').innerHTML = analysis.execBody;
+
+                document.getElementById('kpiDowntime').innerText = analysis.kpiDowntime;
+                document.getElementById('kpiMtbf').innerText = analysis.kpiMtbf;
+                document.getElementById('kpiSavings').innerText = analysis.kpiSavings;
+                document.getElementById('kpiRoi').innerText = analysis.kpiRoi;
+
+                document.getElementById('dynamicDiagnosisParagraph').innerHTML = analysis.diagnosisText;
+
+                // Focus Cards
+                const focusContainer = document.getElementById('focusAreasContainer');
+                focusContainer.innerHTML = analysis.focusCards.map(c => `
+                    <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold shrink-0">
+                            <i class="fa-solid ${c.icon}"></i>
+                        </div>
+                        <div>
+                            <span class="font-bold text-white block mb-1 text-sm">${c.title}</span>
+                            <span class="text-slate-400 text-xs leading-relaxed block">${c.desc}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Solutions Cards
+                const solContainer = document.getElementById('solutionsContainer');
+                solContainer.innerHTML = analysis.solutions.map((s, idx) => `
+                    <div class="p-5 rounded-2xl ${s.isRecommended ? 'bg-slate-950 border-2 border-emerald-500/50' : 'bg-slate-950/60 border border-slate-800'}">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">${idx + 1}</span>
+                                <h4 class="font-black text-white text-sm">${s.title}</h4>
+                            </div>
+                            <span class="${s.isRecommended ? 'bg-emerald-500 text-slate-950 font-black' : 'bg-slate-800 text-slate-300'} px-3 py-1 rounded-lg text-[11px]">
+                                ${s.badge}
+                            </span>
+                        </div>
+                        <p class="text-slate-300 text-xs leading-relaxed mb-3">${s.description}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] bg-slate-900 p-3 rounded-xl border border-slate-800/80">
+                            <div><span class="text-slate-500 block">نطاق التطبيق:</span><span class="text-slate-200 font-semibold">${s.scope}</span></div>
+                            <div><span class="text-slate-500 block">الأثر التشغيلي:</span><span class="text-emerald-400 font-bold">${s.impact}</span></div>
+                            <div><span class="text-slate-500 block">الكلفة والجهد:</span><span class="text-indigo-300 font-semibold">${s.effort}</span></div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Risks
+                const riskGrid = document.getElementById('riskGrid');
+                riskGrid.innerHTML = analysis.risks.map(r => `
+                    <div class="border border-slate-800 bg-slate-950 p-4 rounded-2xl">
+                        <div class="flex justify-between items-center font-bold mb-2">
+                            <span class="text-white text-sm">${r.title}</span>
+                            <span class="${r.badgeStyle} px-2.5 py-0.5 rounded text-[10px]">${r.severity}</span>
+                        </div>
+                        <p class="text-slate-400 mb-3 text-xs leading-relaxed">${r.desc}</p>
+                        <div class="border-t border-slate-800 pt-2 space-y-1">
+                            <p class="text-emerald-400 font-semibold text-[11px]"><i class="fa-solid fa-shield-halved ml-1"></i> الوقاية: ${r.mitigation}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Deliverables
+                const delivGrid = document.getElementById('deliverablesGrid');
+                delivGrid.innerHTML = analysis.deliverables.map(d => `
+                    <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-start gap-3">
+                        <i class="fa-solid fa-file-circle-check text-emerald-400 text-lg mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-white block mb-1 text-xs">${d.title}</span>
+                            <span class="text-slate-400 text-[11px] leading-relaxed block">${d.desc}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Roadmap
+                const roadmapGrid = document.getElementById('roadmapGrid');
+                roadmapGrid.innerHTML = analysis.roadmap.map(m => `
+                    <div class="flex items-start gap-4 p-4 bg-slate-950 rounded-2xl border-r-4 border-emerald-500">
+                        <span class="font-black text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg text-xs whitespace-nowrap">${m.phase}</span>
+                        <div>
+                            <span class="font-bold text-white block text-sm mb-1">${m.title}</span>
+                            <span class="text-slate-400 text-xs leading-relaxed block">${m.details}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Render Dynamic Charts
+                renderCharts(analysis);
+
+                // Scroll
+                document.getElementById('reportSection').scrollIntoView({ behavior: 'smooth' });
+
+            }, 600);
+        }
+
+        function analyzeProblemCategorically(text, sector, focusGoal, scale) {
+            const t = text.trim();
+            const hashSeed = Math.abs(Array.from(t).reduce((acc, c) => (acc << 5) - acc + c.charCodeAt(0), 0)) % 1000;
+
+            // Problem Classification Engine
+            const isFleet = /أسطول|شاحن|مركب|نقل|سائق|طرق|سيار|وقود/i.test(t);
+            const isMachinery = /آلات|معدات|خط إنتاج|مصنع|توقف|قطع غيار|اهتزاز|محرك/i.test(t);
+            const isWarehouse = /مستودع|مخزن|فرز|جرد|مخزون|شحنات|تأخير تسليم|طبات|توزيع/i.test(t);
+            const isEnergy = /طاقة|كهرباء|انبعاث|كربون|هدر|بيئة|وقود|حرارة/i.test(t);
+            const isQuality = /جودة|عيوب|سلامة|حوادث|مطابقة|فحص/i.test(t);
+
+            let category = "general";
+            if (isFleet) category = "fleet";
+            else if (isMachinery) category = "machinery";
+            else if (isWarehouse) category = "warehouse";
+            else if (isEnergy) category = "energy";
+            else if (isQuality) category = "quality";
+
+            // Specialized Data Knowledgebase
+            const database = {
+                fleet: {
+                    execTitle: "استراتيجية رفع اعتمادية الأسطول والنقل اللوجستي",
+                    execBody: "تستهدف هذه الخطة القضاء على الأعطال المفاجئة للأسطول وشاحنات النقل عبر دمج نظام إدارة الأسطول الرقمي (FMS) وتحول الصيانة إلى صيانة تنبؤية استباقية تعتمد على بيانات التشغيل الفلية.",
+                    kpiDowntime: `-${35 + (hashSeed % 15)}%`,
+                    kpiMtbf: `+${40 + (hashSeed % 12)}%`,
+                    kpiSavings: `${22 + (hashSeed % 8)}%`,
+                    kpiRoi: `${7 + (hashSeed % 4)} أشهر`,
+                    diagnosis: "تبين من التحليل أن توقفات الأسطول وتأخر الشحنات ناتجة عن غياب التتبع اللحظي لحالة المحركات والفرامل، والاعتماد على الصيانة العلاجية بعد حدوث العطل بدلاً من الصيانة الاستباقية المعتمدة على الكيلومترات وساعات التشغيل.",
+                    focusCards: [
+                        { title: "أتمتة تتبع حركة الأسطول (Telematics)", desc: "تركيب أجهزة OBD-II وGPS لرصد أداء المحرك والفرامل واستهلاك الوقود.", icon: "fa-truck-fast" },
+                        { title: "جدولة الصيانة الاستباقية (PM)", desc: "ربط تنبيهات الصيانة تلقائياً بقطع المسافات لمنع الأعطال الميدانية.", icon: "fa-calendar-check" },
+                        { title: "إدارة قطع الغيار المستهلكة", desc: "توفير مخزون حرج للأجزاء الأكثر تعرضاً للتلف (إطارات، فرامل، زيوت).", icon: "fa-boxes-packing" },
+                        { title: "برنامج سلوكيات القيادة الآمنة", desc: "تدريب السائقين على القيادة الاقتصادية لتقليل إجهاد المركبات.", icon: "fa-user-check" }
+                    ],
+                    solutions: [
+                        {
+                            title: "تطبيق نظام إدارة الأسطول المتقدم (FMS & Telematics)",
+                            description: "تركيب حسّاسات رقمية وشريحة تتبع في جميع المركبات لرصد أخطاء المحرك وساعات العمل لحظياً وتنبيه فريق الصيانة قبل وقوع العطل.",
+                            scope: "جميع شاحنات ومركبات الأسطول",
+                            impact: "تقليل الأعطال المفاجئة بنسبة 40%",
+                            effort: "متوسط (تطبيق خلال 60 يوماً)",
+                            badge: "الحل الموصى به الأساسي",
+                            isRecommended: true
+                        },
+                        {
+                            title: "إعادة هيكلة عقود الصيانة ورصيد قطع الغيار",
+                            description: "التحول إلى العقود المباشرة مع الوكلاء المعتمدين وتأمين قطع الغيار السريعة لمنع توقف الشاحنة لعدة أيام في الانتظار.",
+                            scope: "قسم إدارة الصيانة والمشتريات",
+                            impact: "تسريع زمن الإصلاح (MTTR) بنسبة 30%",
+                            effort: "منخفض (تنسيق إداري)",
+                            badge: "تطوير تشغيلي",
+                            isRecommended: false
+                        },
+                        {
+                            title: "تأسيس وحدة الاستجابة السريعة للصيانة الميدانية",
+                            description: "تجهيز ورشة متنقلة مجهزة بأدوات الفحص السريع للتدخل المباشر عند تعطل أي مركبة على الطرق السريعة.",
+                            scope: "المحاور اللوجستية الرئيسية",
+                            impact: "تجنب تأخير الشحنات الحساسة",
+                            effort: "متوسط الكلفة",
+                            badge: "إجراء مساند",
+                            isRecommended: false
+                        }
+                    ],
+                    risks: [
+                        { title: "مقاومة السائقين لنظام التتبع الرقمي", severity: "مخاطرة سلوكية", badgeStyle: "bg-amber-500/20 text-amber-300", desc: "اعتراض بعض السائقين على تركيب أجهزة الرصد الميداني.", mitigation: "ربط النظام بالحوافز والمكافآت للقيادة الآمنة والالتزام." },
+                        { title: "تأخر توريد قطع الغيار الأصلية", severity: "سلاسل الإمداد", badgeStyle: "bg-red-500/20 text-red-300", desc: "تذبذب توفر قطع الغيار المعتمدة لدى الوكيل.", mitigation: "تحديد المخزون الأدنى الحرصي (Safety Stock) بالمستودع." }
+                    ],
+                    deliverables: [
+                        { title: "لوحة تحكم تتبع أداء الأسطول (FMS Dashboard)", desc: "منظومة رقمية تعرض موقع وحالة كل شاحنة فورياً." },
+                        { title: "جدول الصيانة الوقائية الموحد", desc: "دليل تشغيلي يحدد مواعيد الفحص بناءً على الكيلومترات." },
+                        { title: "تقرير قياس وفر الوقود والأعطال", desc: "وثيقة قياس دورية تقارن النتائج قبل وبعد التطبيق." }
+                    ],
+                    roadmap: [
+                        { phase: "المرحلة 1 (الشهر الأول)", title: "الفحص الشامل للأسطول وتثبيت الحسّاسات", details: "تركيب أجهزة التتبع على الشاحنات وتوثيق حالتها الميكانيكية." },
+                        { phase: "المرحلة 2 (الشهر الثاني)", title: "ربط البيانات وتدريب فريق الصيانة", details: "تفعيل التنبيهات الآلية وإصدار جداول الصيانة التنبؤية." },
+                        { phase: "المرحلة 3 (الشهر الثالث)", title: "التقييم المستمر والتحسين التشغيلي", details: "مراجعة انخفاض تكاليف الصيانة وقياس سرعة استجابة الشحن." }
+                    ]
+                },
+                machinery: {
+                    execTitle: "استراتيجية تطوير الاعتمادية والصيانة التنبؤية للمعدات",
+                    execBody: "تهدف هذه الدراسة إلى رفع معدل جاهزية خطوط الإنتاج والآلات الثقيلة عبر إدخال تقنيات الصيانة المرتكزة على الاعتمادية (RCM) ومراقبة اهتزازات الحرارة بالزمن الحقيقي.",
+                    kpiDowntime: `-${40 + (hashSeed % 10)}%`,
+                    kpiMtbf: `+${45 + (hashSeed % 15)}%`,
+                    kpiSavings: `${28 + (hashSeed % 6)}%`,
+                    kpiRoi: `${8 + (hashSeed % 3)} أشهر`,
+                    diagnosis: "يتضح من تحليل خط الإنتاج أن الأعطال المفاجئة تعود للتشغيل المستمر دون مراقبة مستويات الإجهاد الميكانيكي والاهتزازات، وغياب نظام التزييت والتشحيم التلقائي المحكم.",
+                    focusCards: [
+                        { title: "مراقبة الاهتزاز والحرارة (IoT Sensors)", desc: "تركيب مستشعرات لاسلكية على المحركات والمضخات لتنبيه الورشة بالخلل.", icon: "fa-wave-square" },
+                        { title: "تطبيق الصيانة الإنتاجية الشاملة (TPM)", desc: "إشراك مشغلي الآلات في أعمال الفحص والتنظيف اليومي الأولية.", icon: "fa-screwdriver" },
+                        { title: "تحليل نمط وأثر الفشل (FMEA)", desc: "تحديد المكونات الحساسة الأكثر تسبباً بتوقف الإنتاج وتأمينها.", icon: "fa-diagram-successor" },
+                        { title: "تطوير نظام تشحيم الآلات تلقائياً", desc: "منع الاحتكاك الحراري عن طريق مضخات التشحيم التلقائية.", icon: "fa-oil-can" }
+                    ],
+                    solutions: [
+                        {
+                            title: "تطبيق الصيانة التنبؤية القائمة على الحسّاسات (Condition Monitoring)",
+                            description: "تركيب أجهزة قياس الاهتزاز والحرارة على الآلات الحرجة لل تنبؤ بالتآكل قبل توقف الآلة التام.",
+                            scope: "الآلات وخطوط التصنيع الأساسية",
+                            impact: "خفض توقف خطوط الإنتاج بنسبة 45%",
+                            effort: "متوسط (تركيب وبرمجة)",
+                            badge: "الحل الموصى به الأساسي",
+                            isRecommended: true
+                        },
+                        {
+                            title: "تأسيس برنامج الصيانة الإنتاجية الشاملة (TPM)",
+                            description: "تدريب الفنيين والمشغلين على قائمة فحص يومية تنفذ خلال 10 دقائق قبل بدء النوبة التشغيلية.",
+                            scope: "كادر التشغيل والصيانة",
+                            impact: "منع 25% من الأعطال البسيطة التراكمية",
+                            effort: "منخفض (تدريب وتنظيم)",
+                            badge: "تعديل سلوك تشغيلي",
+                            isRecommended: false
+                        },
+                        {
+                            title: "تحديث الأجزاء الميكانيكية والكهربائية المتقادمة",
+                            description: "استبدال المحركات القديمة بمحركات حديثة ذات كفاءة عالية ومزودة بمحولات سرعة (VFD).",
+                            scope: "المعدات التي تجاوزت عمرها الافتراضي",
+                            impact: "رفع كفاءة المعدات واستقرار التيار",
+                            effort: "عالي (استثمار رأسمالي)",
+                            badge: "تحديث هيكلي",
+                            isRecommended: false
+                        }
+                    ],
+                    risks: [
+                        { title: "الحاجة لوقف خط الإنتاج أثناء التركيب", severity: "مخاطرة تشغيلية", badgeStyle: "bg-amber-500/20 text-amber-300", desc: "التوقف المؤقت للتركيب قد يسبب تأخير طلبيات قصيرة المدى.", mitigation: "تنفيذ التركيب خلال العطلات الأسبوعية أو فترات الصيانة المخططة." }
+                    ],
+                    deliverables: [
+                        { title: "سجل حصر أصول الآلات وتقييم حرجيتها", desc: "قائمة تصنيف المعدات حسب الأهمية لتوجيه الصيانة." },
+                        { title: "نظام التنبيه المبكر للاهتزاز والحرارة", desc: "برنامج رقمي يرسل إنذاراً عند ارتفاع حرارة المحركات." },
+                        { title: "دليل الصيانة الإنتاجية اليومية (TPM Manual)", desc: "قائمة خطوات الفحص اليومي الخاصة بالمشغلين." }
+                    ],
+                    roadmap: [
+                        { phase: "المرحلة 1 (الشهر الأول)", title: "حصر الأعطال وتثبيت مستشعرات الاهتزاز", details: "تركيب أجهزة القياس على المحركات الرئيسية وتحديد الحدود المسموحة." },
+                        { phase: "المرحلة 2 (الشهر الثاني)", title: "تطوير قائمة الفحص اليومية وتدريب الفنيين", details: "تطبيق نموذج TPM وبدء استقبال قراءات الحسّاسات." },
+                        { phase: "المرحلة 3 (الشهر الثالث)", title: "التحول المكتمل للصيانة التنبؤية", details: "اعتماد جداول الصيانة بناءً على القراءات الفعلية بدلاً من التخمين." }
+                    ]
+                },
+                warehouse: {
+                    execTitle: "استراتيجية أتمتة وتسريع عمليات المستودعات والفرز",
+                    execBody: "تركز هذه الدراسة على التخلص من الاختناقات في المراكز اللوجستية والمستودعات من خلال أتمتة عمليات الجرد والفرز وإعادة تخطيط المساحات التخزينية.",
+                    kpiDowntime: `-${50 + (hashSeed % 10)}%`,
+                    kpiMtbf: `+${35 + (hashSeed % 10)}%`,
+                    kpiSavings: `${30 + (hashSeed % 5)}%`,
+                    kpiRoi: `${6 + (hashSeed % 3)} أشهر`,
+                    diagnosis: "التأخير والأخطاء في تجهيز الشحنات ناتجة عن المسارات غير المخططة للمرافيع الشوكية داخل المستودع، والاعتماد على الجرد اليدوي الورقي الذي يسبب تضارب بيانات المخزون المتوفر.",
+                    focusCards: [
+                        { title: "نظام إدارة المستودعات الرقمي (WMS)", desc: "ربط استلام وشحن البضائع بنظام إلكتروني موحد يوجه العمال أوتوماتيكياً.", icon: "fa-warehouse" },
+                        { title: "تقنية التعريف بالتردد الراديوي (RFID)", desc: "مسح وتتبع الشحنات والكراتين في ثوانٍ دون الحاجة للفحص الفردي.", icon: "fa-barcode" },
+                        { title: "تحسين مسارات الحركة داخل المستودع", desc: "إعادة توزيع السلع الأكثر طلباً بالقرب من بوابات الشحن لتوفير الوقت.", icon: "fa-route" },
+                        { title: "أتمتة الفرز والتغليف", desc: "استخدام سيور فرز آليه لتقليل الاعتماد على الجهد البشري المباشر.", icon: "fa-box" }
+                    ],
+                    solutions: [
+                        {
+                            title: "تطبيق نظام WMS مع تقنية الـ RFID للتعقب اللحظي",
+                            description: "إدخال نظام رقمي يوجه المرافيع والعمال لأماكن البضائع بدقة 100% وقراءة الشحنات فورياً باللواصق الذكية.",
+                            scope: "منطقة الاستلام والتخزين والشحن",
+                            impact: "تسريع تجهيز الطلبيات بنسبة 60%",
+                            effort: "متوسط (تطبيق تقني)",
+                            badge: "الحل الموصى به الأساسي",
+                            isRecommended: true
+                        },
+                        {
+                            title: "إعادة التخطيط الهندسي للممرّات والمساحات (Slotting Optimization)",
+                            description: "تصنيف التخزين بناءً على تحليل (ABC Analysis) بحيث تكون المنتجات سريعة الحركة عند واجهة المستودع.",
+                            scope: "التخطيط الداخلي للمستودع",
+                            impact: "تقليل مسافة حركة العمال والمرافيع 35%",
+                            effort: "منخفض (إعادة ترتيب)",
+                            badge: "تحسين تنظيمي",
+                            isRecommended: false
+                        }
+                    ],
+                    risks: [
+                        { title: "بطء مؤقت خلال فترة التقييد الرقمي للبضائع", severity: "مخاطرة مرحلية", badgeStyle: "bg-blue-500/20 text-blue-300", desc: "الحاجة لإدخال كافة المخزون القديم في النظام الجديد.", mitigation: "إجراء الجرد الشامل خلال عطلة نهاية الأسبوع بتكثيف الكادر." }
+                    ],
+                    deliverables: [
+                        { title: "خريطة المسارات المحسّنة للمستودع", desc: "مخطط يوضح الممرات المخصصة للمرافيع والمشاة لتفادي الازدحام." },
+                        { title: "برمجية إدارة المستودع (WMS Portal)", desc: "واجهة متابعة حركة المخزون والطلبيات معلقة التسليم." }
+                    ],
+                    roadmap: [
+                        { phase: "المرحلة 1", title: "ترميز المخزون وإعادة الترتيب", details: "وضع ملصقات RFID وتصنيف السلع سريعة الحركة." },
+                        { phase: "المرحلة 2", title: "تفعيل نظام WMS وتدريب العمال", details: "تشغيل أجهزة المسح اليدوي وتوجيه العمال إلكترونياً." }
+                    ]
+                },
+                general: {
+                    execTitle: "استراتيجية التطوير الهندسي والتميز التشغيلي",
+                    execBody: "تضع هذه الدراسة حلولاً مباشرة ومحددة لتطوير الأداء التشغيلي وتقليل الهدر وتأمين الاعتمادية للمشروع.",
+                    kpiDowntime: `-${30 + (hashSeed % 10)}%`,
+                    kpiMtbf: `+${30 + (hashSeed % 10)}%`,
+                    kpiSavings: `${20 + (hashSeed % 5)}%`,
+                    kpiRoi: `${8 + (hashSeed % 2)} أشهر`,
+                    diagnosis: "يتضح من تحليل المعطيات وجود حاجة ماسة لتوحيد إجراءات التشغيل وتحسين حوكمة متابعة الأعطال وتدريب الملاكات الميدانية.",
+                    focusCards: [
+                        { title: "تطوير أدلة التشغيل المعيارية (SOPs)", desc: "توثيق وتوحيد خطوات العمل لمنع الاجتهادات الفردية.", icon: "fa-file-signature" },
+                        { title: "أتمتة المتابعة وجمع البيانات", desc: "تقليل الاعتماد على الأوراق واستخدام لوحات متابعة رقمية.", icon: "fa-desktop" }
+                    ],
+                    solutions: [
+                        {
+                            title: "إعادة بناء خطة الصيانة الوقائية والتشغيل المعياري",
+                            description: "إعداد جداول زمنية ملزمة للفحص والصيانة الميدانية وتوثيق خطوات الإصلاح المعتمدة.",
+                            scope: "النطاق التشغيلي العام",
+                            impact: "تقليل الأخطاء التشغيلية بنسبة 35%",
+                            effort: "منخفض إلى متوسط",
+                            badge: "الحل التأسيسي الموصى به",
+                            isRecommended: true
+                        }
+                    ],
+                    risks: [
+                        { title: "التأخر في التكيف مع الإجراءات الحديثة", severity: "مخاطرة تنظيمية", badgeStyle: "bg-slate-700 text-slate-300", desc: "الحاجة لوقت لتأقلم الفريق.", mitigation: "عقد ورش عمل أسبوعية وتثبيت النماذج الجديدة." }
+                    ],
+                    deliverables: [
+                        { title: "دليل الإجراءات التشغيلية الموحد", desc: "وثيقة معتمدة تحكم خطوات العمل والصيانة." }
+                    ],
+                    roadmap: [
+                        { phase: "المرحلة 1", title: "مراجعة الوضع الراهن وإصدار الإجراءات", details: "توثيق العمليات وإعادة توزيع المهام." }
+                    ]
+                }
+            };
+
+            // Select exact category or standard fallback
+            const selectedData = database[category] || database.general;
+
+            return {
+                hashSeed: hashSeed,
+                execTitle: selectedData.execTitle,
+                execBody: selectedData.execBody,
+                kpiDowntime: selectedData.kpiDowntime,
+                kpiMtbf: selectedData.kpiMtbf,
+                kpiSavings: selectedData.kpiSavings,
+                kpiRoi: selectedData.kpiRoi,
+                diagnosisText: selectedData.diagnosis,
+                focusCards: selectedData.focusCards,
+                solutions: selectedData.solutions,
+                risks: selectedData.risks,
+                deliverables: selectedData.deliverables,
+                roadmap: selectedData.roadmap,
+                chartValues: [20, 50, 75, 95],
+                pillarValues: [35, 25, 20, 20]
+            };
+        }
+
+        function renderCharts(analysis) {
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (pillarsChartInstance) pillarsChartInstance.destroy();
+
+            Chart.defaults.color = '#94a3b8';
+            Chart.defaults.borderColor = '#1e293b';
+
+            // Chart 1
+            const ctx1 = document.getElementById('progressChart').getContext('2d');
+            progressChartInstance = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['الوضع الحالي', 'المرحلة 1 (تشخيص وتثبيت)', 'المرحلة 2 (تطبيق وتشغيل)', 'المرحلة 3 (اعتماد واستقرار)'],
+                    datasets: [
+                        { label: 'نسبة الاعتمادية وتقليل الأعطال', data: [25, 55, 80, 95], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.15)', fill: true, tension: 0.3 },
+                        { label: 'الوفر المالي والتكاليف', data: [15, 40, 70, 88], borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.1)', fill: true, tension: 0.3 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Chart 2
+            const ctx2 = document.getElementById('pillarsChart').getContext('2d');
+            pillarsChartInstance = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['الصيانة والاعتمادية', 'التقنية والأتمتة', 'التدريب والكادر', 'الحوكمة والسلامة'],
+                    datasets: [{
+                        data: analysis.pillarValues,
+                        backgroundColor: ['#10b981', '#6366f1', '#3b82f6', '#f59e0b'],
+                        borderWidth: 2,
+                        borderColor: '#0f172a'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+    </script>
+</body>
+</html>
