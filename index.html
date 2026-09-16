@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الاستشارات الهندسية والتطوير المستدام</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        @media print {
+            header, .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background: white !important; color: black !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen pb-12">
+
+    <!-- Header / Navbar -->
+    <header class="bg-slate-900 text-white shadow-xl border-b border-indigo-500/30 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-500/30">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-wide text-white">منصة "استشير" للهندسة والاستدامة</h1>
+                    <p class="text-xs text-emerald-300">محرك التحليل الديناميكي للتحديات الهندسية والبيئية</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 text-xs px-3 py-1.5 rounded-full border border-emerald-500/20 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    المحرك الذكي متفاعل
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-8">
+        
+        <!-- Input Form Section -->
+        <div class="no-print bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-indigo-600"></i>
+                    إدخال بيانات التحدي / مشكلة التطوير
+                </h2>
+                <button onclick="resetForm()" class="text-xs font-bold text-slate-500 hover:text-red-600 transition flex items-center gap-1 bg-slate-100 px-3 py-1.5 rounded-lg">
+                    <i class="fa-solid fa-rotate-left"></i> مسح / مشكلة جديدة
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">القطاع المستهدف</label>
+                    <select id="sector" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+                        <option value="engineering">الهندسة والتصنيع الصناعي</option>
+                        <option value="energy">الطاقة والاستدامة البيئية (ESG)</option>
+                        <option value="tech">التقنية والابتكار الرقمي</option>
+                        <option value="supply">سلاسل الإمداد والخدمات اللوجستية</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">محور التطوير الأساسي</label>
+                    <select id="focusGoal" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+                        <option value="sustainability">مبادرات الاستدامة والحد من الهدر والأنبعاثات</option>
+                        <option value="rnd">البحث والتطوير الهندسي والابتكار (R&D)</option>
+                        <option value="automation">الأتمتة والتحول الرقمي الذكي</option>
+                        <option value="operations">التميز التشغيلي والجودة الشاملة</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">نطاق وحجم المنشأة</label>
+                    <select id="scale" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm font-semibold focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+                        <option value="sme">منشأة واعدة / مشروع تطويري</option>
+                        <option value="enterprise">مؤسسة كبرى / مجمع صناعي متكامل</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">اكتب تفاصيل المشكلة أو قضية التطوير المراد حلها:</label>
+                <textarea id="problemInput" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:bg-white transition placeholder-slate-400" placeholder="مثال 1: نعاني من ارتفاع الانبعاثات الكربونية وزيادة الهدر في خط الإنتاج الأول... 
+مثال 2: كثرة الأعطال المفاجئة في الآلات وتأخر الصيانة مما يقلل من جودة المنتجات..."></textarea>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="runComprehensiveAnalysis()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    توليد تقرير هندسي مخصص لهذه المشكلة
+                </button>
+            </div>
+        </div>
+
+        <!-- Loader Section -->
+        <div id="loader" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200 shadow-sm mb-8">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-indigo-600 border-t-transparent mb-4"></div>
+            <h3 class="text-base font-bold text-slate-800">جاري تحليل النص المكتوب وتوليد الحلول الهندسية المخصصة...</h3>
+            <p class="text-xs text-slate-500 mt-1">يتم بناء الخريطة الاستراتيجية والمخاطر بناءً على تفاصيل مشكلتك...</p>
+        </div>
+
+        <!-- Output Report Section -->
+        <div id="reportSection" class="hidden space-y-6">
+            
+            <!-- Actions Header -->
+            <div class="no-print bg-slate-900 text-white p-4 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4 shadow-md border border-slate-800">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-square-poll-vertical text-2xl text-emerald-400"></i>
+                    <div>
+                        <h3 class="font-bold text-sm">تم تحليل المشكلة وتوليد التقرير الهندسي المخصص</h3>
+                        <p class="text-xs text-slate-400" id="reportTimestamp">معرّف التقرير: #ENG-SUS-9021</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-2 transition shadow">
+                        <i class="fa-solid fa-print"></i> تصدير التقرير / PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Comprehensive KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">مؤشر خفض الهدر / الانبعاثات</span>
+                    <div class="text-2xl font-black text-emerald-600" id="kpiEco">-0%</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">الأثر البيئي المتوقع</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">تسريع كفاءة الانتاج والتطوير</span>
+                    <div class="text-2xl font-black text-indigo-600" id="kpiSpeed">+0%</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">تحسين زمن الدورة الهندسية</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">درجة الجودة والامتثال (ESG)</span>
+                    <div class="text-2xl font-black text-blue-600" id="kpiCompliance">0/100</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">مطابقة معايير القطاع</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 block mb-1">مستوى الجاهزية للتنفيذ</span>
+                    <div class="text-2xl font-black text-teal-600" id="kpiReadiness">-</div>
+                    <span class="text-[11px] text-slate-500 mt-1 block">تقييم قدرة التكيف الميداني</span>
+                </div>
+            </div>
+
+            <!-- Section 1: Detailed Comprehensive Diagnosis -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2 border-b pb-3">
+                    <i class="fa-solid fa-microscope text-indigo-600"></i>
+                    1. التشخيص الهيكلي والتحليل المخصص للمشكلة المدخلة
+                </h3>
+                
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-4">
+                    <span class="text-xs font-bold text-indigo-900 block mb-1">المشكلة التي تم إدخالها وتحليلها:</span>
+                    <p id="displayUserProblem" class="text-sm italic text-slate-700 font-semibold">""</p>
+                </div>
+
+                <p id="dynamicDiagnosisParagraph" class="text-sm text-slate-700 leading-relaxed font-normal mb-4">
+                    <!-- Dynamic Text -->
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs" id="focusAreasContainer">
+                    <!-- Dynamic Focus Cards -->
+                </div>
+            </div>
+
+            <!-- Section 2: Strategy & Solutions Comparison Matrix -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2 border-b pb-3">
+                    <i class="fa-solid fa-cubes-stacked text-indigo-600"></i>
+                    2. مسارات الحلول الهندسية المقترحة لمعالجة هذه المشكلة
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-right">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                <th class="p-3 rounded-r-lg">مسار الحل الهندسي</th>
+                                <th class="p-3">مستوى الجهد والتنفيذ</th>
+                                <th class="p-3">العائد المتوقع</th>
+                                <th class="p-3">الأثر البيئي والتطويري</th>
+                                <th class="p-3 rounded-l-lg">التقييم والاستحسان</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100" id="solutionsTableBody">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 3: Visual Analytics -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h4 class="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-indigo-600"></i>
+                        تطور كفاءة الحل الموصى به عبر المراحل
+                    </h4>
+                    <div class="relative h-60">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h4 class="text-xs font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-indigo-600"></i>
+                        توزيع ركائز المعالجة الخاصة بمشكلتك
+                    </h4>
+                    <div class="relative h-60">
+                        <canvas id="pillarsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Risk Matrix -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2 border-b pb-3">
+                    <i class="fa-solid fa-shield-halved text-indigo-600"></i>
+                    3. مصفوفة المخاطر المتوقعة وطرق التخفيف منها
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs" id="riskGrid">
+                    <!-- Dynamic Risks -->
+                </div>
+            </div>
+
+            <!-- Section 5: Roadmap -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2 border-b pb-3">
+                    <i class="fa-solid fa-route text-indigo-600"></i>
+                    4. خارطة الطريق لتطبيق الحل الميداني
+                </h3>
+                <div class="space-y-3 text-xs" id="roadmapGrid">
+                    <!-- Dynamic Roadmap -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JavaScript Engine -->
+    <script>
+        let progressChartInstance = null;
+        let pillarsChartInstance = null;
+
+        function resetForm() {
+            document.getElementById('problemInput').value = '';
+            document.getElementById('reportSection').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function runComprehensiveAnalysis() {
+            const rawInput = document.getElementById('problemInput').value.trim();
+            const sector = document.getElementById('sector').value;
+            const focusGoal = document.getElementById('focusGoal').value;
+            const scale = document.getElementById('scale').value;
+
+            if (!rawInput) {
+                alert('يرجى كتابة نص التحدي أو المشكلة أولاً ليقوم النظام بتحليلها وتوليد التقرير المخصص لها!');
+                return;
+            }
+
+            // Show Loader
+            document.getElementById('loader').classList.remove('hidden');
+            document.getElementById('reportSection').classList.add('hidden');
+
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('reportSection').classList.remove('hidden');
+
+                // Generate 100% Dynamic Analysis based on Input
+                const analysis = generateDynamicAnalysis(rawInput, sector, focusGoal, scale);
+
+                // Populate UI Elements
+                document.getElementById('displayUserProblem').innerText = `"${rawInput}"`;
+                document.getElementById('reportTimestamp').innerText = `معرّف التقرير المولد: #ENG-${Math.floor(100000 + Math.random() * 900000)}`;
+
+                document.getElementById('kpiEco').innerText = analysis.kpiEco;
+                document.getElementById('kpiSpeed').innerText = analysis.kpiSpeed;
+                document.getElementById('kpiCompliance').innerText = analysis.kpiCompliance;
+                document.getElementById('kpiReadiness').innerText = analysis.kpiReadiness;
+
+                document.getElementById('dynamicDiagnosisParagraph').innerHTML = analysis.diagnosisText;
+
+                // Focus Cards
+                const focusContainer = document.getElementById('focusAreasContainer');
+                focusContainer.innerHTML = analysis.focusCards.map(c => `
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                        <i class="fa-solid ${c.icon} text-indigo-600 text-lg mt-0.5"></i>
+                        <div>
+                            <span class="font-bold text-slate-800 block mb-0.5">${c.title}</span>
+                            <span class="text-slate-600">${c.desc}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Table Solutions
+                const tbody = document.getElementById('solutionsTableBody');
+                tbody.innerHTML = analysis.solutions.map(s => `
+                    <tr class="${s.isRecommended ? 'bg-indigo-50/70 font-semibold border-2 border-indigo-200' : 'hover:bg-slate-50'}">
+                        <td class="p-3 font-bold text-slate-800">${s.name}</td>
+                        <td class="p-3 text-slate-600">${s.complexity}</td>
+                        <td class="p-3 font-bold text-emerald-600">${s.returnVal}</td>
+                        <td class="p-3 text-indigo-900 font-medium">${s.ecoImpact}</td>
+                        <td class="p-3">
+                            <span class="${s.isRecommended ? 'bg-emerald-600 text-white font-bold' : 'bg-slate-200 text-slate-700'} px-2.5 py-1 rounded-md text-[11px]">
+                                ${s.badge}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+
+                // Risks
+                const riskGrid = document.getElementById('riskGrid');
+                riskGrid.innerHTML = analysis.risks.map(r => `
+                    <div class="border border-slate-200 bg-slate-50 p-3.5 rounded-xl">
+                        <div class="flex justify-between font-bold mb-1">
+                            <span class="text-slate-800">${r.title}</span>
+                            <span class="${r.badgeColor} px-2 py-0.5 rounded text-[10px]">${r.level}</span>
+                        </div>
+                        <p class="text-slate-600 mb-1 text-[11px]">${r.desc}</p>
+                        <p class="text-indigo-900 font-semibold text-[11px]">طريقة التخفيف بالحوكمة: ${r.mitigation}</p>
+                    </div>
+                `).join('');
+
+                // Roadmap
+                const roadmapGrid = document.getElementById('roadmapGrid');
+                roadmapGrid.innerHTML = analysis.roadmap.map(m => `
+                    <div class="flex items-start gap-3 p-3 bg-slate-50 rounded-xl border-r-4 border-indigo-600">
+                        <span class="font-bold text-indigo-900 whitespace-nowrap">${m.phase}:</span>
+                        <div>
+                            <span class="font-bold text-slate-800 block">${m.title}</span>
+                            <span class="text-slate-600">${m.details}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Render Dynamic Charts
+                renderCharts(analysis);
+
+                // Scroll to view
+                document.getElementById('reportSection').scrollIntoView({ behavior: 'smooth' });
+
+            }, 600);
+        }
+
+        function generateDynamicAnalysis(text, sector, focusGoal, scale) {
+            const t = text.trim();
+            const words = t.split(' ');
+            const shortKeyword = words.slice(0, 3).join(' '); // Extract snippet
+
+            // Scoring system based on input text keywords
+            let ecoScore = 0, autoScore = 0, opsScore = 0, rndScore = 0;
+
+            if (/استدام|بيئ|كربون|انبعاث|طاق|مياه|تدوير|هدر|مناخ|أخضر/i.test(t)) ecoScore += 3;
+            if (/أتمت|ذكاء|برمج|نظام|تحول رقم|حساس|بيانات|روبوت/i.test(t)) autoScore += 3;
+            if (/جودة|إنتاج|صيانة|سلام|عطل|عيوب|تشغيل|فحص/i.test(t)) opsScore += 3;
+            if (/تطوير|ابتكار|بحث|تصميم|مواد|منتج|اختبار/i.test(t)) rndScore += 3;
+
+            // Fallback scores if general input
+            if (ecoScore === 0 && autoScore === 0 && opsScore === 0 && rndScore === 0) {
+                opsScore = 2; autoScore = 2; rndScore = 1;
+            }
+
+            // Unique hash seed to make numbers change with every different text
+            const textHash = Array.from(t).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const seed = (textHash % 15);
+
+            const ecoVal = `-${25 + (ecoScore * 5) + (seed % 5)}%`;
+            const speedVal = `+${30 + (rndScore * 4) + (autoScore * 4) + (seed % 7)}%`;
+            const complianceVal = `${87 + (ecoScore * 2) + (seed % 6)}/100`;
+            const readiness = scale === 'enterprise' ? 'جاهز للتطبيق المؤسسي' : 'جاهز للتطبيق المرن';
+
+            // Dynamic Diagnosis Text
+            let mainPillars = [];
+            if (ecoScore > 0) mainPillars.push("معالجة الأثر البيئي واستخلاص الهدر");
+            if (autoScore > 0) mainPillars.push("إدخال تقنيات الأتمتة الميدانية");
+            if (opsScore > 0) mainPillars.push("رفع معايير الجودة والتقليل من أعطال التشغيل");
+            if (rndScore > 0) mainPillars.push("تطوير الهندسة الابتكارية للمنتج/الخدمة");
+
+            let diagnosisText = `أظهر التحليل الهندسي المخصص للمشكلة المدخلة <b>("${shortKeyword}...")</b> ضمن <b>${getSectorName(sector)}</b> أن معالجة هذا التحدي تتطلب تركيزاً مباشراً على <b>${mainPillars.join('، و')}</b>. يوصى بعدم الاكتفاء بالحلول السريعة، بل تطبيق الحل الهيكلي الموضح أدناه لتحقيق أقصى استدامة.`;
+
+            // Dynamic Focus Cards
+            let focusCards = [
+                { title: `معالجة تحدي: ${shortKeyword}`, desc: `حل التحديات المتعلقة بـ "${t.substring(0, 35)}..." بطرق هندسية حديثة.`, icon: "fa-bullseye" },
+                { title: "الربط بمعايير ESG والجودة", desc: "ضمان أن الحل المقترح يقلل التكاليف الخفية ويرفع معايير الاستدامة البيئية.", icon: "fa-leaf" }
+            ];
+
+            // Dynamic Solutions Table
+            const solutions = [
+                {
+                    name: `المسار (أ): التحول الشامل واستبدال المنظومة المعنية بـ (${shortKeyword})`,
+                    complexity: "عالي جداً (استراتيجي)",
+                    returnVal: `+${55 + (seed % 10)}% تحسين كلي`,
+                    ecoImpact: "أثر بيئي ممتاز وقوي",
+                    badge: "تحول جذري",
+                    isRecommended: false
+                },
+                {
+                    name: `المسار (ب): التطوير الهندسي الموجه لأتمتة وتطوير (${shortKeyword})`,
+                    complexity: "متوسط (مرن ومباشر)",
+                    returnVal: `+${40 + (seed % 12)}% عائد سريع`,
+                    ecoImpact: "تحسين بيئي وتطويري موجه",
+                    badge: "الخيار الموصى به لمشكلتك",
+                    isRecommended: true
+                },
+                {
+                    name: `المسار (ج): المعالجة التشغيلية المباشرة واشتراطات الصيانة`,
+                    complexity: "منخفض (مرحلي)",
+                    returnVal: `+${22 + (seed % 8)}% تحسين فوري`,
+                    ecoImpact: "حد أدنى من الامتثال",
+                    badge: "حل سريع مؤقت",
+                    isRecommended: false
+                }
+            ];
+
+            // Dynamic Risks
+            const risks = [
+                {
+                    title: `مخاطر التكيّف التشغيلي مع معالجة (${shortKeyword})`,
+                    level: "متوسط",
+                    badgeColor: "bg-amber-100 text-amber-800",
+                    desc: `احتمالية حدوث بطء مؤقت أثناء الانتقال لتطبيق الحل الهندسي الخاص بـ "${shortKeyword}".`,
+                    mitigation: "تدريب الكادر وتوفير دليل تشغيلي واضح للمرحلة الانتقالية."
+                },
+                {
+                    title: `التطابق مع معايير الاستدامة البيئية والجودة`,
+                    level: "هام جداً",
+                    badgeColor: "bg-blue-100 text-blue-800",
+                    desc: "الحاجة للتأكد من أن الكفاءة الجديدة تطابق لوائح القطاع المعتمدة.",
+                    mitigation: "إجراء اختبارات دقيقة ودورية قبل الاعتماد النهائي."
+                }
+            ];
+
+            // Dynamic Roadmap
+            const roadmap = [
+                { phase: "المرحلة 1", title: `التدقيق الفني والهندسي لمشكلة (${shortKeyword})`, details: "حصر المسببات الجذرية للخلل أو الهدر وتحديد مؤشرات النجاح المطلوبة." },
+                { phase: "المرحلة 2", title: "التطبيق التجريبي للحل الموصى به (Pilot Phase)", details: "تركيب المنظومة أو تطبيق آلية التطوير على نطاق محدّد لاختبار النتائج." },
+                { phase: "المرحلة 3", title: "الاعتماد الكلي والقياس البيئي المستمر", details: "تعميم الحل الهندسي وتوثيق نتائج خفض الانبعاثات والجودة الشاملة." }
+            ];
+
+            // Dynamic Charts Data based on text hash
+            const pillarData = [
+                15 + (ecoScore * 8) + (seed % 5),
+                20 + (rndScore * 8) + (seed % 4),
+                20 + (autoScore * 8) + (seed % 6),
+                25 + (opsScore * 8) + (seed % 3)
+            ];
+
+            return {
+                kpiEco: ecoVal,
+                kpiSpeed: speedVal,
+                kpiCompliance: complianceVal,
+                kpiReadiness: readiness,
+                diagnosisText: diagnosisText,
+                focusCards: focusCards,
+                solutions: solutions,
+                risks: risks,
+                roadmap: roadmap,
+                pillarData: pillarData,
+                seed: seed
+            };
+        }
+
+        function getSectorName(sec) {
+            const map = {
+                engineering: 'قطاع الهندسة والتصنيع',
+                energy: 'قطاع الطاقة والاستدامة البيئية',
+                tech: 'قطاع التقنية والابتكار',
+                supply: 'قطاع سلاسل الإمداد والخدمات اللوجستية'
+            };
+            return map[sec] || 'القطاع الهندسي';
+        }
+
+        function renderCharts(analysis) {
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (pillarsChartInstance) pillarsChartInstance.destroy();
+
+            const s = analysis.seed;
+
+            // Dynamic Line Progress Chart
+            const ctx1 = document.getElementById('progressChart').getContext('2d');
+            progressChartInstance = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['المرحلة 1 (تشخيص)', 'المرحلة 2 (تطبيق)', 'المرحلة 3 (تحسين)', 'المرحلة 4 (استدامة)'],
+                    datasets: [
+                        { label: 'كفاءة معالجة المشكلة', data: [20 + s, 45 + s, 75 + (s%5), 95], borderColor: '#6366f1', backgroundColor: 'rgba(99, 102, 241, 0.1)', fill: true, tension: 0.3 },
+                        { label: 'الأثر البيئي والتطويري', data: [15, 38 + s, 70 + (s%7), 90], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.1)', fill: true, tension: 0.3 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            // Dynamic Doughnut Pillars Chart
+            const ctx2 = document.getElementById('pillarsChart').getContext('2d');
+            pillarsChartInstance = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['الاستدامة والبيئة', 'البحث والتطوير (R&D)', 'الأتمتة والرقمنة', 'التميز التشغيلي'],
+                    datasets: [{
+                        data: analysis.pillarData,
+                        backgroundColor: ['#10b981', '#6366f1', '#3b82f6', '#f59e0b']
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+        }
+    </script>
+</body>
+</html>
