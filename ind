@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير المعالجة الهندسية والتميز التشغيلي</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="border-b border-slate-800 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-extrabold text-white flex items-center gap-3">
+                    <i class="fa-solid fa-chart-line text-emerald-400"></i>
+                    لوحة تقرير المعالجة التشغيلية
+                </h1>
+                <p class="text-slate-400 text-sm mt-1">منظومة التميز الهندسي وتحليل الأداء التشغيلي</p>
+            </div>
+            <button onclick="generateReport()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-lg shadow-emerald-500/20 flex items-center gap-2">
+                <i class="fa-solid fa-rotate-right"></i> إعادة إنشـاء التقرير
+            </button>
+        </header>
+
+        <!-- Executive Summary & KPIs -->
+        <section class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6 shadow-xl">
+            <h2 id="execTitle" class="text-xl font-bold text-emerald-400 mb-2">خطة المعالجة الهندسية</h2>
+            <p id="execBody" class="text-slate-300 text-sm leading-relaxed mb-6">جارٍ تحميل الملخص التنفيذي...</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-slate-900">
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span id="kpiLabel1" class="text-slate-400 text-xs block mb-1">خفض التكاليف</span>
+                    <span id="kpi1" class="text-xl font-extrabold text-emerald-400">-35%</span>
+                </div>
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span id="kpiLabel2" class="text-slate-400 text-xs block mb-1">رفع الكفاءة</span>
+                    <span id="kpi2" class="text-xl font-extrabold text-emerald-400">+45%</span>
+                </div>
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span id="kpiLabel3" class="text-slate-400 text-xs block mb-1">نسبة الاعتمادية</span>
+                    <span id="kpi3" class="text-xl font-extrabold text-emerald-400">98%</span>
+                </div>
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 text-center">
+                    <span class="text-slate-400 text-xs block mb-1">المدى الزمني</span>
+                    <span id="kpi4" class="text-xl font-extrabold text-emerald-400">6 أشهر</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diagnosis & Focus Areas -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-stethoscope text-emerald-400"></i> التشيخص والتحليل
+                    </h3>
+                    <p id="displayUserProblem" class="text-xs text-amber-400 bg-amber-500/10 p-3 rounded-xl border border-amber-500/20 italic mb-4">"تأخر في التجاوب مع الأعطال وزيادة الهدر التشغيلي"</p>
+                    <p id="dynamicDiagnosisParagraph" class="text-slate-300 text-xs leading-relaxed">تحديد المسببات الجذرية وإجراءات الحد من الاختناقات التشغيلية.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-bullseye text-emerald-400"></i> محاور التركيز
+                </h3>
+                <div id="focusAreasContainer" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <!-- Solutions -->
+        <section class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-lightbulb text-emerald-400"></i> الحلول والتوصيات الهندسية
+            </h3>
+            <div id="solutionsContainer" class="space-y-4"></div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6">
+                <h3 class="text-sm font-bold text-slate-300 mb-4">مؤشر تحسن الأداء التراكمي</h3>
+                <div class="h-64">
+                    <canvas id="progressChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6">
+                <h3 class="text-sm font-bold text-slate-300 mb-4">توزيع ركائز التحول التشغيلي</h3>
+                <div class="h-64">
+                    <canvas id="pillarsChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risks & Deliverables -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> إدارة المخاطر والتخفيف
+                </h3>
+                <div id="riskGrid" class="space-y-3"></div>
+            </div>
+
+            <div class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-cubes text-emerald-400"></i> المخرجات والتسليمات
+                </h3>
+                <div id="deliverablesGrid" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section class="bg-slate-950/80 border border-slate-800 rounded-3xl p-6">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-map-location-dot text-emerald-400"></i> الخطة الزمنية للتنفيذ (Roadmap)
+            </h3>
+            <div id="roadmapGrid" class="space-y-3"></div>
+        </section>
+
+    </div>
+
+    <!-- JavaScript Execution Code -->
+    <script>
+        let progressChartInstance = null;
+        let pillarsChartInstance = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            generateReport();
+        });
+
+        function generateReport() {
+            const data = fetchReportData();
+            renderReport(data);
+        }
+
+        function fetchReportData() {
+            return {
+                execTitle: "إعادة هيكلة وحوكمة العمليات التشغيلية",
+                execBody: "يهدف هذا التقرير إلى معالجة الفجوات التشغيلية الحالية من خلال إرساء قواعد التميز الهندسي، وأتمتة مسارات العمل، وتطبيق برامج الصيانة الوقائية والاعتمادية لتقليل تكاليف التشغيل وتحسين جودة المخرجات.",
+                kpi1: "-35%",
+                kpi2: "+40%",
+                kpi3: "98.5%",
+                kpi4: "6 أشهر",
+                kpiLabel1: "خفض الهدر",
+                kpiLabel2: "الإنتاجية",
+                kpiLabel3: "الاعتمادية",
+                userProblem: "وجود بطء في إجراءات الاستجابة وغياب الأتمتة للعمليات اليومية.",
+                diagnosis: "تبيّن من خلال التحليل التشغيلي الاعتماد المباشر على المعاملات الورقية والاجتهادات الفردية، مما يتسبب في رفع زمن الدورة التشغيلية وزيادة مخاطر التوقفات غير المخطط لها.",
+                focusCards: [
+                    { title: "حوكمة العمليات وإجراءات SOPs", desc: "توثيق وتوحيد خطوات التنفيذ لمنع الاجتهادات الفردية.", icon: "fa-sliders" },
+                    { title: "إدارة الاعتمادية والكفاءة التشغيلية", desc: "تطبيق منهجيات الصيانة الوقائية وتحليل المسببات الجذرية (RCA).", icon: "fa-gears" }
+                ],
+                solutions: [
+                    {
+                        title: "إعادة هيكلة مسارات العمل وتطبيق التميز التشغيلي (Operational Excellence)",
+                        description: "وضع لوائح تشغيل معيارية واستبدال النماذج الورقية بنظام رقمي لإدارة البلاغات ومتابعة الأعطال.",
+                        scope: "القطاع التشغيلي والهندسي",
+                        impact: "تقليل زمن الاستجابة وخفض الهدر بنسبة 35%",
+                        effort: "متوسط (تطبيق خلال 60 يوماً)",
+                        badge: "الحل الموصى به",
+                        isRecommended: true
+                    }
+                ],
+                risks: [
+                    { title: "مقاومة التغيير التنظيمي", severity: "مخاطرة تشغيلية", badgeStyle: "bg-amber-500/20 text-amber-300", desc: "بطء التكيف مع الإجراءات المعيارية الجديدة.", mitigation: "تنظيم ورش عمل وتطبيق نظام حوافز مرتبط بالأداء." }
+                ],
+                deliverables: [
+                    { title: "دليل الإجراءات التشغيلية المعيارية (SOPs Manual)", desc: "وثيقة معتمدة لتوثيق خطوات التشغيل وخطط الطوارئ." },
+                    { title: "لوحة متابعة مؤشرات الأداء (KPI Dashboard)", desc: "نظام قياس دوري لكفاءة العمليات والإنتاجية." }
+                ],
+                roadmap: [
+                    { phase: "المرحلة 1 (0-30 يوم)", title: "حصر الفجوات التشغيلية", details: "تحديد الاختناقات وتوثيق خطوط سير العمل الحالية." },
+                    { phase: "المرحلة 2 (30-60 يوم)", title: "إطلاق الإجراءات الرقمية", details: "تدريب كادر العمل وتطبيق معايير الاعتمادية." }
+                ]
+            };
+        }
+
+        function renderReport(data) {
+            // 1. Executive Summary & KPIs
+            document.getElementById('execTitle').innerText = data.execTitle || "خطة المعالجة الهندسية";
+            document.getElementById('execBody').innerHTML = data.execBody || "";
+            document.getElementById('kpi1').innerText = data.kpi1 || "-0%";
+            document.getElementById('kpi2').innerText = data.kpi2 || "+0%";
+            document.getElementById('kpi3').innerText = data.kpi3 || "0%";
+            document.getElementById('kpi4').innerText = data.kpi4 || "0 أشهر";
+
+            if (data.kpiLabel1) document.getElementById('kpiLabel1').innerText = data.kpiLabel1;
+            if (data.kpiLabel2) document.getElementById('kpiLabel2').innerText = data.kpiLabel2;
+            if (data.kpiLabel3) document.getElementById('kpiLabel3').innerText = data.kpiLabel3;
+
+            // 2. Diagnosis Section
+            document.getElementById('displayUserProblem').innerText = `"${data.userProblem || ''}"`;
+            document.getElementById('dynamicDiagnosisParagraph').innerText = data.diagnosis || "";
+
+            // Focus Areas Cards
+            const focusContainer = document.getElementById('focusAreasContainer');
+            focusContainer.innerHTML = (data.focusCards || []).map(card => `
+                <div class="bg-slate-900/70 border border-slate-800 p-4 rounded-2xl flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                        <i class="fa-solid ${card.icon || 'fa-check'} text-sm"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-xs mb-1">${card.title}</h4>
+                        <p class="text-slate-400 text-[11px] leading-relaxed">${card.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // 3. Solutions Section
+            const solutionsContainer = document.getElementById('solutionsContainer');
+            solutionsContainer.innerHTML = (data.solutions || []).map(sol => `
+                <div class="bg-slate-900/90 p-5 rounded-2xl border ${sol.isRecommended ? 'border-emerald-500/50' : 'border-slate-800'} relative overflow-hidden">
+                    ${sol.badge ? `<span class="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full ${sol.isRecommended ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 text-slate-300'}">${sol.badge}</span>` : ''}
+                    <h4 class="font-bold text-white text-sm mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+                        ${sol.title}
+                    </h4>
+                    <p class="text-slate-300 text-xs mb-3 leading-relaxed">${sol.description}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-400 pt-3 border-t border-slate-800/80">
+                        <div><strong class="text-slate-200">النطاق:</strong> ${sol.scope}</div>
+                        <div><strong class="text-slate-200">الأثر:</strong> ${sol.impact}</div>
+                        <div><strong class="text-slate-200">الجهد:</strong> ${sol.effort}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // 4. Risks Section
+            const riskGrid = document.getElementById('riskGrid');
+            riskGrid.innerHTML = (data.risks || []).map(risk => `
+                <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="font-bold text-white text-xs">${risk.title}</h4>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${risk.badgeStyle || 'bg-red-500/20 text-red-300'}">${risk.severity}</span>
+                    </div>
+                    <p class="text-slate-400 text-[11px] mb-2">${risk.desc}</p>
+                    <div class="text-[11px] text-emerald-400 bg-emerald-500/5 p-2 rounded-xl border border-emerald-500/10">
+                        <strong>خطة التخفيف:</strong> ${risk.mitigation}
+                    </div>
+                </div>
+            `).join('');
+
+            // 5. Deliverables Section
+            const deliverablesGrid = document.getElementById('deliverablesGrid');
+            deliverablesGrid.innerHTML = (data.deliverables || []).map(del => `
+                <div class="bg-slate-900/70 p-4 rounded-2xl border border-slate-800">
+                    <h4 class="font-bold text-emerald-400 text-xs mb-1 flex items-center gap-1.5">
+                        <i class="fa-solid fa-box text-xs"></i> ${del.title}
+                    </h4>
+                    <p class="text-slate-400 text-[11px]">${del.desc}</p>
+                </div>
+            `).join('');
+
+            // 6. Phased Roadmap
+            const roadmapGrid = document.getElementById('roadmapGrid');
+            roadmapGrid.innerHTML = (data.roadmap || []).map(step => `
+                <div class="bg-slate-900/70 p-3 rounded-xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-emerald-500/10 text-emerald-400 font-bold px-2 py-1 rounded-lg border border-emerald-500/20 text-[10px] shrink-0">${step.phase}</span>
+                        <span class="font-bold text-white text-xs">${step.title}</span>
+                    </div>
+                    <span class="text-slate-400 text-[11px]">${step.details}</span>
+                </div>
+            `).join('');
+
+            // 7. Render Charts
+            renderCharts();
+        }
+
+        function renderCharts() {
+            if (progressChartInstance) progressChartInstance.destroy();
+            if (pillarsChartInstance) pillarsChartInstance.destroy();
+
+            const ctx1 = document.getElementById('progressChart').getContext('2d');
+            progressChartInstance = new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['الشهر 1', 'الشهر 2', 'الشهر 3', 'الشهر 4', 'الشهر 5', 'الشهر 6'],
+                    datasets: [{
+                        label: 'مؤشر التحسن التراكمي (%)',
+                        data: [15, 30, 55, 70, 85, 95],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Cairo' } } } },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+                        y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById('pillarsChart').getContext('2d');
+            pillarsChartInstance = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['التحول الرقمي', 'إدارة الاعتمادية', 'الاستدامة والحوكمة', 'التدريب والسلامة'],
+                    datasets: [{
+                        data: [35, 30, 20, 15],
+                        backgroundColor: ['#10b981', '#6366f1', '#3b82f6', '#f59e0b']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Cairo' } } } }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
